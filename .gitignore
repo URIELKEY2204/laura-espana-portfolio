@@ -8,3 +8,7 @@ out/
 .DS_Store
 
 *.tsbuildinfo
+
+.media-source/
+laura-preview.zip
+*.downloading
