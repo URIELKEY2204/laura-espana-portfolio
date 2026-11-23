@@ -17,13 +17,13 @@ export default function ProjectGallery({ full = false }: { full?: boolean }) {
           {f}<span>{f==="Todos"?String(projects.length).padStart(2,"0"):String(projects.filter(p=>p.category===f).length).padStart(2,"0")}</span>
         </button>)}
       </div>}
-      <div className={"project-grid project-grid-vertical"+(full?" project-grid-full":"")} aria-live="polite">
+      {full&&<p className="project-result-count" aria-live="polite">{visible.length} trabajos</p>}
+      <div className={"project-grid project-grid-vertical"+(full?" project-grid-full":"")}>
         {visible.map((p, idx) => <article className="project" key={p.title}>
           <div className="project-media">
             <video controls playsInline preload="none" poster={p.image} aria-label={"Reproducir "+p.title}>
               <source src={p.video} type="video/mp4"/>
-              <source src={p.legacyVideo} type="video/mp4"/>
-              Tu navegador no soporta este video. <a href={p.legacyVideo}>Ver video</a>.
+              Tu navegador no soporta este video. <a href={p.video}>Ver video</a>.
             </video>
             <span className="media-type">{p.category}</span>
           </div>

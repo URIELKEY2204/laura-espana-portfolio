@@ -1,17 +1,23 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import {DM_Sans, Manrope} from "next/font/google";
+const dm = DM_Sans({subsets:["latin"],variable:"--font-dm",display:"swap"});
+const manrope = Manrope({subsets:["latin"],variable:"--font-manrope",display:"swap"});
 
 export const metadata: Metadata = {
   title: "Laura España | Fotografía y video para marcas",
   description: "Fotografía de producto, contenido gastronómico y producción audiovisual para marcas, restaurantes y retail en Caracas. Explora el trabajo de Laura España y conversemos sobre tu proyecto.",
   metadataBase: new URL("https://snazzy-manatee-de4ef3.netlify.app"),
-  robots: { index: false, follow: true },
+  robots: { index: true, follow: true },
   openGraph: {
     title: "Laura España — Contenido que muestra mejor lo que vendes",
     description: "Fotografía, video comercial y contenido visual para marcas.",
     type: "website",
+    url: "https://snazzy-manatee-de4ef3.netlify.app/",
+    images: [{url:"/images/portraits/perfil1.webp",width:1200,height:1800,alt:"Laura España — fotografía y video para marcas"}],
   },
+  alternates: { canonical: "https://snazzy-manatee-de4ef3.netlify.app/" },
 };
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="es"><body>{children}</body></html>;
+  return <html lang="es"><body className={dm.variable+" "+manrope.variable}>{children}</body></html>;
 }

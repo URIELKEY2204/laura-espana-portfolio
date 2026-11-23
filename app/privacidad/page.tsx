@@ -1,13 +1,20 @@
 import Link from "next/link";
+import type {Metadata} from "next";
+export const metadata:Metadata={title:"Privacidad y contacto | Laura España",robots:{index:false,follow:true}};
 
 export default function Privacidad() {
  return <main className="legal">
   <Link href="/" className="back">← Volver al portafolio</Link>
   <p className="eyebrow">Información legal</p>
   <h1>Privacidad y contacto</h1>
-  <p>Esta página es un portafolio profesional de Laura España. No incorpora rastreadores publicitarios, cookies de analítica ni formularios de recopilación de datos.</p>
-  <p>Si decides comunicarte por correo o WhatsApp, compartirás voluntariamente los datos que incluyas en tu mensaje. La conversación se gestionará únicamente para responder a tu consulta comercial y realizar el seguimiento solicitado. Para solicitar acceso, rectificación o eliminación de la información compartida, escribe a <a href="mailto:lauraespana63@gmail.com">lauraespana63@gmail.com</a>.</p>
-  <p>Los enlaces a plataformas externas como WhatsApp y los reproductores de video pueden aplicar sus propias políticas de privacidad. Los videos procedentes del despliegue anterior de este portafolio se encuentran en el mismo servicio de alojamiento y están sujetos a la disponibilidad de esa versión.</p>
-  <p>Esta política se revisará antes de incorporar formularios, herramientas de seguimiento o campañas publicitarias.</p>
+  <p><strong>Responsable del contacto:</strong> Laura España. Puedes solicitar información sobre tus datos o ejercer tus derechos escribiendo a <a href="mailto:lauraespana63@gmail.com">lauraespana63@gmail.com</a>.</p>
+  <p><strong>Qué datos se recogen:</strong> cuando utilizas el formulario de contacto, nos proporcionas tu nombre, WhatsApp, negocio o proyecto y tipo de servicio. Puedes añadir un correo, un plazo aproximado y una descripción voluntaria.</p>
+  <p><strong>Finalidad:</strong> responder a tu solicitud de servicios de fotografía y producción audiovisual y realizar únicamente el seguimiento relacionado con esa consulta. No se requiere consentimiento para recibir publicidad o boletines: no se ofrece esa suscripción en el formulario.</p>
+  <p><strong>Base de tratamiento:</strong> tu consentimiento explícito al enviar el formulario. Puedes retirarlo solicitándolo por correo; esto no afecta a los tratamientos realizados antes de tu solicitud.</p>
+  <p><strong>Almacenamiento y proveedores:</strong> el sitio se aloja en Netlify; cuando el formulario esté habilitado en esa plataforma, las respuestas podrán quedar registradas en Netlify Forms. Si eliges WhatsApp o correo, el proveedor correspondiente procesará la comunicación conforme a sus condiciones.</p>
+  <p><strong>Conservación:</strong> los datos se utilizarán durante la gestión y seguimiento de la consulta y deberán revisarse para eliminarse cuando ya no resulten necesarios; como criterio operativo, se establece un máximo de 12 meses desde el último contacto, salvo obligación legal de conservación.</p>
+  <p><strong>Tus derechos:</strong> puedes solicitar acceso, corrección, eliminación de datos o retirar tu consentimiento escribiendo a la dirección anterior. Se revisará tu petición conforme a la normativa aplicable.</p>
+  <p><strong>Cookies y contenido externo:</strong> este portafolio no instala rastreadores publicitarios ni cookies de analítica propias. El reproductor de YouTube solo se activa cuando decides verlo. Las plataformas externas pueden utilizar sus propias tecnologías de seguimiento.</p>
+  <p>Última revisión: 23 de noviembre de 2026.</p>
  </main>;
 }

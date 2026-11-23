@@ -19,7 +19,7 @@ export default function Documentary() {
     </button>}
    </div>
    <div className="documentary-caption"><div><p className="project-client">CINE / DOCUMENTAL</p><h3>{documentary.title}</h3><p>{documentary.description}</p></div><a href={documentary.watchUrl} target="_blank" rel="noopener noreferrer">Abrir en YouTube ↗</a></div>
-   <p className="video-privacy"></p>
+   <p className="video-privacy">El documental se reproduce desde YouTube únicamente cuando eliges verlo.</p>
   </div>
  </section>;
 }
