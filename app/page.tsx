@@ -84,7 +84,7 @@ export default function Home() {
         <div className="project-meta"><div><p className="project-client">{p.client}</p><h3>{p.title}</h3><p>{p.description}</p></div><span className="project-number">{String(idx+1).padStart(2,"0")}</span></div>
        </article>)}
       </div>
-      <div className="portfolio-more"><div><span className="asterisk">✳</span><h3>¿Quieres ver más?</h3><p>También puedes explorar otras producciones y colaboraciones audiovisuales.</p></div><a className="btn btn-outline" href="https://drive.google.com/drive/folders/1sAS5Fv_Jpft-I_5eCGk1ptd3BKmgBtpA" target="_blank" rel="noopener noreferrer">Archivo completo <span>↗</span></a></div>
+      <div className="portfolio-more"><div><span className="asterisk">✳</span><h3>¿Quieres ver más?</h3><p>También puedes explorar otras producciones y colaboraciones audiovisuales.</p></div><a className="btn btn-outline" href={whatsapp} target="_blank" rel="noopener noreferrer">Solicitar más trabajos <span>↗</span></a></div>
      </div>
     </section>
     <section id="servicios" className="section services-section">
