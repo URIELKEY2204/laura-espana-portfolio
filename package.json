@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "tsc --noEmit",
-    "test:smoke": "node scripts/smoke.mjs"
+    "test:smoke": "node scripts/smoke.mjs",
+    "test:preview": "node scripts/test-video-previews.mjs"
   },
   "dependencies": {
     "next": "^15.5.0",

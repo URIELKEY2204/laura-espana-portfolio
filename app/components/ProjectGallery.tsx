@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { Category, filters, projects } from "../data/projects";
+import ProjectVideo from "./ProjectVideo";
 
 export default function ProjectGallery({ full = false }: { full?: boolean }) {
   const [filter, setFilter] = useState<Category>("Todos");
@@ -21,10 +22,7 @@ export default function ProjectGallery({ full = false }: { full?: boolean }) {
       <div className={"project-grid project-grid-vertical"+(full?" project-grid-full":"")}>
         {visible.map((p, idx) => <article className="project" key={p.title}>
           <div className="project-media">
-            <video controls playsInline preload="none" poster={p.image} aria-label={"Reproducir "+p.title}>
-              <source src={p.video} type="video/mp4"/>
-              Tu navegador no soporta este video. <a href={p.video}>Ver video</a>.
-            </video>
+            <ProjectVideo project={p} />
             <span className="media-type">{p.category}</span>
           </div>
           <div className="project-meta">

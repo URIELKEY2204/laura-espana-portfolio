@@ -16,7 +16,11 @@ npm run build
 La exportación estática se genera en `out/`. Netlify: build `npm run build`, publish `out`.
 
 ## Estado de activos
-Las imágenes originales públicas se recuperaron del despliegue Netlify; los videos se referencian temporalmente desde la URL anterior para no introducir cientos de MB al repositorio. **No apagar el sitio original ni sustituir el despliegue antes de migrar los videos a almacenamiento estable**. Los contenidos de Café Roma y Lali siguen pendientes de confirmación de autoría y derechos para publicarse como portafolio de Laura.
+Los seis videos de proyecto ahora se sirven desde rutas locales en /public/videos/projects/ y las 25 fotografías gastronómicas seleccionadas (19 de Lali's y 6 de Café Roma) se sirven como WebP optimizados. La autorización de uso web con titularidad compartida declarada consta en docs/asset-audit.md; pueden existir derechos de terceros que deban revisarse.
+
+### Vista previa de los videos
+
+Cada tarjeta utiliza una portada WebP como respaldo y un video MP4 silencioso de 2 segundos en bucle. Los clips están en /public/videos/previews/ y se generan a partir de los originales con python3 scripts/create-video-previews.py (requiere ffmpeg). La reproducción se limita a las tarjetas visibles en pantalla; el ajuste de movimiento reducido la desactiva. El botón «Ver video» abre la versión íntegra con controles. Pruebas con npm run test:preview sobre el servidor local en http://127.0.0.1:4187/.
 
 ## Privacidad
 Sin scripts de analítica ni cookies no esenciales. El contacto se abre en los proveedores elegidos por el visitante. La sección de privacidad se incluye en `/privacidad`. Revisar requisitos locales antes de activar automatizaciones.
