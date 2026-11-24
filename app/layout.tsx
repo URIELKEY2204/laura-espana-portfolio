@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     url: "https://snazzy-manatee-de4ef3.netlify.app/",
     images: [{url:"/images/portraits/perfil1.webp",width:1200,height:1800,alt:"Laura España — fotografía y video para marcas"}],
   },
-  alternates: { canonical: "https://snazzy-manatee-de4ef3.netlify.app/" },
+
 };
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return <html lang="es"><body className={dm.variable+" "+manrope.variable}>{children}</body></html>;

@@ -22,6 +22,11 @@ export default function ContactIntake() {
         onSubmit={(event) => {
           // Se guarda solo en esta pestaña para preparar WhatsApp en la confirmación.
           // No añade datos personales a la URL ni altera el envío nativo de Netlify.
+          const params = new URLSearchParams(window.location.search);
+          for (const key of ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term"]) {
+            const input = event.currentTarget.elements.namedItem(key);
+            if (input instanceof HTMLInputElement) input.value = (params.get(key) || "").slice(0, 120);
+          }
           try {
             const data = capturaConsulta(new FormData(event.currentTarget));
             window.sessionStorage.setItem(SESSION_KEY, JSON.stringify(data));
@@ -35,6 +40,11 @@ export default function ContactIntake() {
         }}
       >
         <input type="hidden" name="form-name" value="laura-consultas-audiovisuales" />
+        <input type="hidden" name="utm_source" />
+        <input type="hidden" name="utm_medium" />
+        <input type="hidden" name="utm_campaign" />
+        <input type="hidden" name="utm_content" />
+        <input type="hidden" name="utm_term" />
         <p className="form-honeypot" aria-hidden="true"><label>Deja este campo vacío<input name="bot-field" tabIndex={-1} autoComplete="off" /></label></p>
         <div className="lead-fields">
           <label>Tu nombre <span aria-hidden="true">*</span><input name="nombre" type="text" autoComplete="name" maxLength={90} placeholder="¿Cómo te llamas?" required /></label>

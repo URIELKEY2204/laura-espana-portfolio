@@ -1,5 +1,3 @@
 User-agent: *
 Allow: /
-Disallow: /gracias/
-Disallow: /__forms.html
 Sitemap: https://snazzy-manatee-de4ef3.netlify.app/sitemap.xml

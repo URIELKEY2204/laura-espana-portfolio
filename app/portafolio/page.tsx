@@ -7,6 +7,7 @@ export const metadata: Metadata = {
   title: "Portafolio audiovisual | Laura España",
   description: "Fotografía y producciones audiovisuales para marcas que quieren destacar. Conoce los trabajos de Laura España y hablemos de tu próximo proyecto.",
   alternates: { canonical: "/portafolio/" },
+  openGraph: { title: "Portafolio audiovisual | Laura España", description: "Fotografía y producciones audiovisuales para marcas.", url: "/portafolio/" },
 };
 export default function PortfolioPage() {
  return <>
