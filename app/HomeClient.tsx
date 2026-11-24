@@ -30,7 +30,7 @@ export default function Home() {
     <section id="inicio" className="hero">
      <div className="wrap hero-grid">
       <div className="hero-copy">
-       <span className="eyebrow"><span className="status-dot"/>Producción visual independiente · Caracas</span>
+       <span className="eyebrow"><span className="status-dot"/>Caracas, Venezuela - Remoto</span>
        <h1>Fotografía y video<br/>para <em>empresas.</em></h1>
        <p>Producción audiovisual para restaurantes, comercios, marcas y agencias que necesitan contenido profesional para sus redes, campañas y canales digitales. Hablemos de proyectos puntuales o colaboraciones recurrentes.</p>
        <div className="hero-actions">
