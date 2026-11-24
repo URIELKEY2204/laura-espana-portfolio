@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { capturaConsulta, SESSION_KEY } from "../lib/consultaWhatsapp";
 
 export default function ContactIntake() {
   const [previewNotice, setPreviewNotice] = useState(false);
@@ -19,6 +20,14 @@ export default function ContactIntake() {
         netlify-honeypot="bot-field"
         className="lead-form"
         onSubmit={(event) => {
+          // Se guarda solo en esta pestaña para preparar WhatsApp en la confirmación.
+          // No añade datos personales a la URL ni altera el envío nativo de Netlify.
+          try {
+            const data = capturaConsulta(new FormData(event.currentTarget));
+            window.sessionStorage.setItem(SESSION_KEY, JSON.stringify(data));
+          } catch {
+            // El formulario continúa aunque el almacenamiento de sesión esté bloqueado.
+          }
           if (["localhost", "127.0.0.1"].includes(window.location.hostname)) {
             event.preventDefault();
             setPreviewNotice(true);

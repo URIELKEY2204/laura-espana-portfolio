@@ -1,0 +1,426 @@
+{
+  "name": "Laura España · Netlify Forms → Google Sheets CRM (requiere Google OAuth)",
+  "active": false,
+  "id": "cCkG7zQtfwwLYFRf",
+  "nodes": [
+    {
+      "id": "laura-schedule",
+      "name": "Consultar cada 5 minutos",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        240,
+        240
+      ],
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 5
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "laura-get",
+      "name": "Consultar Netlify Forms",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        470,
+        240
+      ],
+      "parameters": {
+        "method": "GET",
+        "url": "https://api.netlify.com/api/v1/forms/6b04b3b6186beb05f23848db/submissions",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "per_page",
+              "value": "100"
+            }
+          ]
+        }
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "zNXDNUQG9lvoPdsa",
+          "name": "Camino Digital - Netlify"
+        }
+      }
+    },
+    {
+      "id": "laura-prepare",
+      "name": "Validar y clasificar solicitudes",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        700,
+        240
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "\nconst collect = $input.all().flatMap(({json}) => Array.isArray(json) ? json : Array.isArray(json.body) ? json.body : json.id ? [json] : []);\nconst byId = new Map();\nconst cell = (v,max=1500)=>{let s=String(v??'').trim().slice(0,max);return /^[=+\\-@]/.test(s)?\"'\"+s:s;};\nfor(const item of collect){\n const d=item.data??{};\n if(!item.id || d.consentimiento_contacto !== 'si') continue;\n if(byId.has(item.id)) continue;\n const p=String(d.plazo??'Por definir');\n const urgency=p.includes('dos semanas')?'Alta':p.includes('próximo mes')?'Media':p.includes('Más adelante')?'Baja':'Por definir';\n const phone=String(d.whatsapp??'').replace(/\\D/g,'');\n const valid=/^58(?:412|414|416|424|426)\\d{7}$/.test(phone);\n const received=String(item.created_at??new Date().toISOString());\n byId.set(item.id,{json:{\n  'Fecha de recepción (UTC)':received,\n  'ID de envío Netlify':String(item.id),\n  'Nombre':cell(d.nombre,90),\n  'WhatsApp':cell(d.whatsapp,30),\n  'Negocio / proyecto':cell(d.negocio,120),\n  'Servicio solicitado':cell(d.servicio,100),\n  'Plazo':cell(p,80),\n  'Correo electrónico':cell(d.email,150),\n  'Descripción':cell(d.descripcion,1500),\n  'Consentimiento':'si',\n  'Fuente':'Netlify Forms',\n  'Estado comercial':'Nuevo',\n  'Urgencia':urgency,\n  'Responsable':'',\n  'Último contacto':'',\n  'Próximo paso':'Contactar y calificar',\n  'Fecha seguimiento':'',\n  'Observaciones':'',\n  'WhatsApp (enlace)':valid?'https://wa.me/'+phone:'',\n  'Sincronizado (UTC)':new Date().toISOString(),\n  'Validación':'Verificado en Netlify',\n  'Última actualización':received,\n }});}\nreturn [...byId.values()];\n"
+      }
+    },
+    {
+      "id": "laura-rows",
+      "name": "Leer IDs existentes en Sheets",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        930,
+        240
+      ],
+      "alwaysOutputData": true,
+      "parameters": {
+        "operation": "read",
+        "documentId": {
+          "__rl": true,
+          "value": "1jr8AaadafZFyZHop9ywFGT6iYBS8dDyEZ9GaAKG58Yc",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Solicitudes",
+          "mode": "name"
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "laura-onlynew",
+      "name": "Solo nuevos por ID",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1150,
+        240
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const present=new Set($input.all().map(x=>String(x.json['ID de envío Netlify']||'')).filter(Boolean));\nreturn $('Validar y clasificar solicitudes').all().filter(x=>!present.has(String(x.json['ID de envío Netlify'])));"
+      }
+    },
+    {
+      "id": "laura-sheet",
+      "name": "Añadir solicitudes nuevas",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1370,
+        240
+      ],
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1jr8AaadafZFyZHop9ywFGT6iYBS8dDyEZ9GaAKG58Yc",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Solicitudes",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Fecha de recepción (UTC)": "={{ $json[\"Fecha de recepción (UTC)\"] }}",
+            "ID de envío Netlify": "={{ $json[\"ID de envío Netlify\"] }}",
+            "Nombre": "={{ $json[\"Nombre\"] }}",
+            "WhatsApp": "={{ $json[\"WhatsApp\"] }}",
+            "Negocio / proyecto": "={{ $json[\"Negocio / proyecto\"] }}",
+            "Servicio solicitado": "={{ $json[\"Servicio solicitado\"] }}",
+            "Plazo": "={{ $json[\"Plazo\"] }}",
+            "Correo electrónico": "={{ $json[\"Correo electrónico\"] }}",
+            "Descripción": "={{ $json[\"Descripción\"] }}",
+            "Consentimiento": "={{ $json[\"Consentimiento\"] }}",
+            "Fuente": "={{ $json[\"Fuente\"] }}",
+            "Estado comercial": "={{ $json[\"Estado comercial\"] }}",
+            "Urgencia": "={{ $json[\"Urgencia\"] }}",
+            "Responsable": "={{ $json[\"Responsable\"] }}",
+            "Último contacto": "={{ $json[\"Último contacto\"] }}",
+            "Próximo paso": "={{ $json[\"Próximo paso\"] }}",
+            "Fecha seguimiento": "={{ $json[\"Fecha seguimiento\"] }}",
+            "Observaciones": "={{ $json[\"Observaciones\"] }}",
+            "WhatsApp (enlace)": "={{ $json[\"WhatsApp (enlace)\"] }}",
+            "Sincronizado (UTC)": "={{ $json[\"Sincronizado (UTC)\"] }}",
+            "Validación": "={{ $json[\"Validación\"] }}",
+            "Última actualización": "={{ $json[\"Última actualización\"] }}"
+          },
+          "schema": [
+            {
+              "id": "Fecha de recepción (UTC)",
+              "displayName": "Fecha de recepción (UTC)",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "ID de envío Netlify",
+              "displayName": "ID de envío Netlify",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Nombre",
+              "displayName": "Nombre",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "WhatsApp",
+              "displayName": "WhatsApp",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Negocio / proyecto",
+              "displayName": "Negocio / proyecto",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Servicio solicitado",
+              "displayName": "Servicio solicitado",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Plazo",
+              "displayName": "Plazo",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Correo electrónico",
+              "displayName": "Correo electrónico",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Descripción",
+              "displayName": "Descripción",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Consentimiento",
+              "displayName": "Consentimiento",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Fuente",
+              "displayName": "Fuente",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Estado comercial",
+              "displayName": "Estado comercial",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Urgencia",
+              "displayName": "Urgencia",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Responsable",
+              "displayName": "Responsable",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Último contacto",
+              "displayName": "Último contacto",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Próximo paso",
+              "displayName": "Próximo paso",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Fecha seguimiento",
+              "displayName": "Fecha seguimiento",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Observaciones",
+              "displayName": "Observaciones",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "WhatsApp (enlace)",
+              "displayName": "WhatsApp (enlace)",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Sincronizado (UTC)",
+              "displayName": "Sincronizado (UTC)",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Validación",
+              "displayName": "Validación",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Última actualización",
+              "displayName": "Última actualización",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ]
+        },
+        "options": {}
+      }
+    }
+  ],
+  "connections": {
+    "Consultar cada 5 minutos": {
+      "main": [
+        [
+          {
+            "node": "Consultar Netlify Forms",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Consultar Netlify Forms": {
+      "main": [
+        [
+          {
+            "node": "Validar y clasificar solicitudes",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validar y clasificar solicitudes": {
+      "main": [
+        [
+          {
+            "node": "Leer IDs existentes en Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Leer IDs existentes en Sheets": {
+      "main": [
+        [
+          {
+            "node": "Solo nuevos por ID",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Solo nuevos por ID": {
+      "main": [
+        [
+          {
+            "node": "Añadir solicitudes nuevas",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "saveManualExecutions": true
+  },
+  "staticData": null,
+  "pinData": {},
+  "tags": []
+}

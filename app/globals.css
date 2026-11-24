@@ -142,3 +142,13 @@ body{font-family:var(--font-dm),Arial,sans-serif}
 .project-back-to-preview{position:absolute;z-index:3;top:12px;right:12px;min-height:44px;padding:8px 14px;border:1px solid rgba(255,255,255,.8);border-radius:3px;background:rgba(28,23,21,.86);color:white;font-size:12px;font-weight:700}
 .project-back-to-preview:hover{background:#9c3f32}
 @media(prefers-reduced-motion:reduce){.project-video-frame .project-preview-motion{transition:none}}
+
+/* CTA WhatsApp después del formulario: diseño prominente y accesible. */
+.thanks-whatsapp{margin:34px 0 44px;padding:clamp(26px,4vw,52px);background:#e8f3ed;border:1px solid #a9cbb5;border-radius:12px;color:#1d3c2d}
+.thanks-whatsapp-eyebrow{font-size:11px!important;font-weight:800;letter-spacing:.15em;text-transform:uppercase;color:#235c3f!important;margin:0 0 14px}
+.thanks-whatsapp h2{font:800 clamp(28px,4vw,42px)/1.14 var(--font-manrope),sans-serif;letter-spacing:-.05em;margin:0 0 16px}
+.thanks-whatsapp > p:not(.thanks-whatsapp-eyebrow){font-size:15px;line-height:1.7;color:#28543a;max-width:55ch}
+.thanks-whatsapp-cta{display:flex;align-items:center;justify-content:space-between;gap:22px;min-height:66px;margin-top:27px;padding:18px 24px;border-radius:7px;background:#146c43;color:#fff;font-size:clamp(15px,2.2vw,19px);font-weight:800;text-decoration:none}
+.thanks-whatsapp-cta:hover,.thanks-whatsapp-cta:focus-visible{background:#0d5935;color:white}
+.thanks-whatsapp .thanks-whatsapp-note{font-size:12px!important;color:#416450!important;margin:14px 0 0}
+@media(max-width:580px){.thanks-whatsapp{padding:24px 18px;margin:26px 0}.thanks-whatsapp-cta{padding:18px 17px}}
