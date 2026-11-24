@@ -1,4 +1,5 @@
 "use client";
+import SiteCredit from "./SiteCredit";
 import {useEffect,useState} from "react";
 import FoodGallery from "./FoodGallery";
 import FoodHeroCarousel from "./FoodHeroCarousel";
@@ -20,5 +21,5 @@ export default function ServiceExperience({kind,title,description,work}:{kind:Ki
  <section className="section service-method"><div className="wrap service-method-grid"><h2>Cómo trabajamos</h2><p>{work}</p></div></section>
  <section className="section service-other"><div className="wrap service-method-grid"><h2>Otros servicios</h2><div>{services.filter(s=>s.kind!==kind).map(s=><a key={s.kind} href={s.href}>{s.title}<span aria-hidden="true">↗</span></a>)}</div></div></section>
  <section className="contact-section"><div className="wrap"><h2>Solicita una propuesta <em>para tu empresa.</em></h2><div className="contact-actions"><a className="btn btn-light" href={contact}>{offer[kind].cta} ↗</a></div></div></section></main>
- <footer className="footer"><div className="wrap footer-inner"><a href="/" className="footer-brand">LAURA ESPAÑA<span>.</span></a><span>Fotografía, video y dirección visual</span><a href="/privacidad/">Privacidad</a><span>© {new Date().getFullYear()} Laura España</span></div></footer></div>;
+ <footer className="footer"><div className="wrap footer-inner"><a href="/" className="footer-brand">LAURA ESPAÑA<span>.</span></a><span>Fotografía, video y dirección visual</span><a href="/privacidad/">Privacidad</a><span>© {new Date().getFullYear()} Laura España</span></div><SiteCredit/></footer></div>;
 }

@@ -1,9 +1,10 @@
+import SiteCredit from "../components/SiteCredit";
 import Link from "next/link";
 import type {Metadata} from "next";
 export const metadata:Metadata={title:"Privacidad y contacto | Laura España",robots:{index:false,follow:true}};
 
 export default function Privacidad() {
- return <main className="legal">
+ return <><main className="legal">
   <Link href="/" className="back">← Volver al portafolio</Link>
   <p className="eyebrow">Información legal</p>
   <h1>Privacidad y contacto</h1>
@@ -16,5 +17,5 @@ export default function Privacidad() {
   <p><strong>Tus derechos:</strong> puedes solicitar acceso, corrección, eliminación de datos o retirar tu consentimiento escribiendo a la dirección anterior. Se revisará tu petición conforme a la normativa aplicable.</p>
   <p><strong>Cookies y contenido externo:</strong> este portafolio no instala rastreadores publicitarios ni cookies de analítica propias. El reproductor de YouTube solo se activa cuando decides verlo. Las plataformas externas pueden utilizar sus propias tecnologías de seguimiento.</p>
   <p>Última revisión: 24 de noviembre de 2026.</p>
- </main>;
+ </main><footer className="footer"><SiteCredit/></footer></>;
 }

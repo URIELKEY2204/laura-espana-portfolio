@@ -1,3 +1,4 @@
+import SiteCredit from "../components/SiteCredit";
 import type { Metadata } from "next";
 import ProjectGallery from "../components/ProjectGallery";
 import Documentary from "../components/Documentary";
@@ -19,6 +20,6 @@ export default function PortfolioPage() {
    <Documentary/>
    <section className="portfolio-contact"><div className="wrap"><p className="eyebrow">¿TRABAJAMOS JUNTOS?</p><h2>Tu producto tiene potencial.<br/><em>Hagamos que se note.</em></h2><a className="btn btn-light" href="/#contacto">Solicitar una propuesta ↗</a></div></section>
   </main>
-  <footer className="footer"><div className="wrap footer-inner"><a href="/" className="footer-brand">LAURA ESPAÑA<span>.</span></a><span>Fotografía, video y dirección visual</span><a href="/privacidad/">Privacidad</a><span>© {new Date().getFullYear()} Laura España</span></div></footer>
+  <footer className="footer"><div className="wrap footer-inner"><a href="/" className="footer-brand">LAURA ESPAÑA<span>.</span></a><span>Fotografía, video y dirección visual</span><a href="/privacidad/">Privacidad</a><span>© {new Date().getFullYear()} Laura España</span></div><SiteCredit/></footer>
  </>;
 }
