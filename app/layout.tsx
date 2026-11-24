@@ -6,7 +6,7 @@ const manrope = Manrope({subsets:["latin"],variable:"--font-manrope",display:"sw
 
 export const metadata: Metadata = {
   title: "Laura España | Fotografía y video para marcas",
-  description: "Fotografía de producto, contenido gastronómico y producción audiovisual para marcas, restaurantes y retail en Caracas. Explora el trabajo de Laura España y conversemos sobre tu proyecto.",
+  description: "Fotografía gastronómica, video comercial y edición audiovisual para empresas, restaurantes y agencias. Proyectos puntuales y colaboraciones recurrentes según alcance.",
   metadataBase: new URL("https://snazzy-manatee-de4ef3.netlify.app"),
   robots: { index: true, follow: true },
   openGraph: {

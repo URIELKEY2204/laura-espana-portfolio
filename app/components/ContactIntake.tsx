@@ -9,8 +9,8 @@ export default function ContactIntake() {
     <div className="lead-form-shell">
       <div className="lead-form-heading">
         <p className="eyebrow">CUÉNTAME QUÉ TIENES EN MENTE</p>
-        <h3>Hagamos que tu idea tome forma.</h3>
-        <p>Cuéntame un poco sobre lo que necesitas y te escribiré para conversar sobre el proyecto.</p>
+        <h3>Cuéntame qué necesita tu empresa.</h3>
+        <p>Indica el tipo de contenido y el plazo. Si buscas una colaboración recurrente, puedes mencionarlo en la descripción. Te contactaré para revisar el alcance.</p>
       </div>
       <form
         name="laura-consultas-audiovisuales"
@@ -70,7 +70,7 @@ export default function ContactIntake() {
             </select>
           </label>
           <label>Correo electrónico (opcional)<input name="email" type="email" maxLength={150} autoComplete="email" placeholder="hola@tuempresa.com" /></label>
-          <label className="lead-wide">Tu idea, en pocas palabras <textarea name="descripcion" rows={4} maxLength={1500} placeholder="Cuéntame qué quieres mostrar o conseguir con estas imágenes" /></label>
+          <label className="lead-wide">Tu idea, en pocas palabras <textarea name="descripcion" rows={4} maxLength={1500} placeholder="¿Proyecto puntual o contenido recurrente? Cuéntame qué piezas necesitas." /></label>
         </div>
         <label className="lead-consent"><input name="consentimiento_contacto" type="checkbox" value="si" required /><span>Autorizo el uso de estos datos únicamente para responder a mi solicitud. He leído la <a href="/privacidad/" target="_blank" rel="noopener noreferrer">política de privacidad</a>. <b aria-hidden="true">*</b></span></label>
         <button className="btn btn-dark lead-submit" type="submit">Solicitar una propuesta <span aria-hidden="true">↗</span></button>
