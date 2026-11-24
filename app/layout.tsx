@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import CameraEffects from "./components/CameraEffects";
 import {DM_Sans, Manrope} from "next/font/google";
 const dm = DM_Sans({subsets:["latin"],variable:"--font-dm",display:"swap"});
 const manrope = Manrope({subsets:["latin"],variable:"--font-manrope",display:"swap"});
@@ -19,5 +20,5 @@ export const metadata: Metadata = {
 
 };
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="es"><body className={dm.variable+" "+manrope.variable}>{children}</body></html>;
+  return <html lang="es"><body className={dm.variable+" "+manrope.variable}>{children}<CameraEffects/></body></html>;
 }

@@ -1,17 +1,13 @@
 "use client";
 import SiteCredit from "./components/SiteCredit";
+import ServicePreviewGallery from "./components/ServicePreviewGallery";
+import {ApertureIcon,CameraSoundToggle} from "./components/CameraEffects";
 
 import ProjectGallery from "./components/ProjectGallery";
 import Documentary from "./components/Documentary";
 import ContactIntake from "./components/ContactIntake";
 
 const whatsapp = "https://wa.me/584242196550?text=" + encodeURIComponent("Hola Laura, vi tu portafolio y me gustaría conversar sobre una producción de contenido para mi marca.");
-const services = [
-  { n:"01", title:"Gastronomía y producto", body:"Sesiones de fotografía para presentar productos, actualizar menús y preparar contenido para redes.", detail:"Restaurantes · Cafeterías · Retail", href:"/servicios/fotografia-gastronomica/" },
-  { n:"02", title:"Contenido comercial", body:"Producciones para lanzamientos, demostraciones, anuncios y necesidades de contenido recurrente.", detail:"Reels · Ads · Campañas", href:"/servicios/video-comercial/" },
-  { n:"03", title:"Cobertura de marca", body:"Registro audiovisual de eventos, espacios y activaciones para comunicar lo que sucede en tu marca.", detail:"Eventos · Tiendas · Experiencias", href:"/#contacto" },
-  { n:"04", title:"Edición y postproducción", body:"Edición de material grabado para agencias, empresas y creadores que necesitan piezas listas para publicar.", detail:"Edición · Postproducción", href:"/servicios/edicion-video/" },
-];
 
 export default function Home() {
  return (
@@ -24,7 +20,7 @@ export default function Home() {
       <a href="/portafolio/">Portafolio</a><a href="#servicios">Servicios</a><a href="#metodo">Cómo trabajo</a>
      </nav>
      <details className="mobile-menu"><summary>Menú</summary><nav aria-label="Menú móvil"><a href="/portafolio/">Portafolio</a><a href="#trabajos">Videos</a><a href="#servicios">Servicios</a><a href="#metodo">Cómo trabajo</a><a href="#contacto">Solicitar propuesta</a></nav></details>
-     <a className="nav-cta" href="#contacto">Hablemos <span aria-hidden="true">↗</span></a>
+     <a className="nav-cta" href="#contacto">Hablemos <ApertureIcon className="camera-aperture"/></a>
     </div>
    </header>
    <main id="contenido">
@@ -35,9 +31,10 @@ export default function Home() {
        <h1>Fotografía y video<br/>para <em>empresas.</em></h1>
        <p>Producción audiovisual para restaurantes, comercios, marcas y agencias que necesitan contenido profesional para sus redes, campañas y canales digitales. Hablemos de proyectos puntuales o colaboraciones recurrentes.</p>
        <div className="hero-actions">
-        <a className="btn btn-dark" href="#servicios">Conocer servicios <span>↘</span></a>
+        <a className="btn btn-dark" href="#servicios">Conocer servicios <ApertureIcon className="camera-aperture"/></a>
         <a className="text-link" href={whatsapp} target="_blank" rel="noopener noreferrer">Conversemos por WhatsApp <span>↗</span></a>
        </div>
+       <CameraSoundToggle/>
        <div className="hero-foot"><span>LAURA ESPAÑA</span><span>REALIZACIÓN · FOTOGRAFÍA · EDICIÓN</span></div>
       </div>
       <div className="hero-visual">
@@ -48,11 +45,11 @@ export default function Home() {
       </div>
      </div>
     </section>
-    <div className="ticker" aria-hidden="true"><div>ESTÉTICA CON PROPÓSITO <span>✳</span> CONTENIDO DE MARCA <span>✳</span> FOTOGRAFÍA + VIDEO <span>✳</span> ESTÉTICA CON PROPÓSITO <span>✳</span> CONTENIDO DE MARCA <span>✳</span></div></div>
+    <nav className="ticker service-banner" aria-label="Servicios audiovisuales"><div className="service-banner-inner"><a href="/servicios/fotografia-gastronomica/">Fotografía gastronómica y de producto</a><span aria-hidden="true"><ApertureIcon/></span><a href="/servicios/video-comercial/">Video comercial</a><span aria-hidden="true"><ApertureIcon/></span><a href="#servicio-cobertura">Cobertura de marca</a><span aria-hidden="true"><ApertureIcon/></span><a href="/servicios/edicion-video/">Edición y postproducción</a></div></nav>
     <section id="servicios" className="section services-section">
      <div className="wrap">
       <div className="section-head services-head"><div><p className="eyebrow">SERVICIOS PARA EMPRESAS</p><h2>Contenido para tus<br/><em>necesidades reales.</em></h2></div><p className="section-intro">Contrata una producción puntual o conversa conmigo sobre un esquema de trabajo mensual, con entregables y plazos acordados.</p></div>
-      <div className="service-grid">{services.map(s=><article className="service" key={s.n}><span className="service-n">{s.n} /</span><h3>{s.title}</h3><p>{s.body}</p><span className="service-detail">{s.detail}</span><a className="text-link" href={s.href}>Conocer servicio ↗</a></article>)}</div>
+      <ServicePreviewGallery/>
 
      </div>
     </section>
